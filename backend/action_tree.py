@@ -5,6 +5,7 @@ An action tree is an object comparable to a graph, where using a pathway runs a 
 
 from .version_manager import VersionManager
 from .run_manager import RunManager
+from .config import FOLDERS
 
 class ActionTree():
     """
@@ -20,8 +21,9 @@ class ActionTree():
             self.name = name
 
     def __init__(self):
+        binary_folder, save_folder, runfile_folder, conf_folder = FOLDERS
         self.version_manager = VersionManager()
-        self.run_manager = RunManager()
+        self.run_manager = RunManager(binary_folder, save_folder, runfile_folder, conf_folder)
 
         self.universal = {
             "go": (["Target mode"], [], self.move_to)

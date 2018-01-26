@@ -37,7 +37,7 @@ class RunManager():
         # Create savefile if one doesn't exist
         if exists(join(self.save_folder, save)):
             subprocess_handle = subprocess.Popen([
-                join(self.binary_folder, binary),
+                join(self.binary_folder, binary, "bin", "x64", "factorio"),
                 "--create",
                 join(self.save_folder, save)
             ])
@@ -88,7 +88,7 @@ class RunManager():
 
         # --start-server saves/gotlap.zip --server-settings ../server-settings.json
         # Name of binary
-        args = [join(self.binary_folder, binary)]
+        args = [join(self.binary_folder, binary, "bin", "x64", "factorio")]
         args += ["--start-server", join(self.save_folder, save)]
         args += ["--server-settings", join(self.conf_folder, conf)]
         args += launch_options.split()

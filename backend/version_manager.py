@@ -9,8 +9,9 @@ class VersionManager():
     Download manager will probably be a thing later, this will probably
     have a download manager member.
     """
-    def __init__(self):
-        pass
+
+    def __init__(self, binary_folder):
+        self.binary_folder = binary_folder
 
     def install(self, version=None):
         """
