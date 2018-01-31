@@ -101,8 +101,8 @@ ENV/
 .mypy_cache/
 
 # Project Specific
-tmp/
-conf/
-runfiles/
-saves/
-binaries/
+tmp/*
+conf/*
+runfiles/*
+saves/*
+binaries/*
