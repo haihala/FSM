@@ -9,7 +9,7 @@ class UI():
     Parent for cli and possible later graphical UI.
     """
     def __init__(self, *args):
-        self.running = False
+        self.running = True
         self.args = args
 
     @abstractmethod
@@ -35,16 +35,10 @@ class Cli(UI):
         # Formated user input
         fui = self.format(input(">"))
 
-        self.find_action(fui)
+        self.output = self.action_tree.call(fui)
 
-    def find_action(self, fui):
-        """
-        test
-        """
-        pass
-
-    def format(self, out):
+    def format(self, to_format):
         """
         Used to format users' inputs in such a form where it can be parsed.
         """
-        return out
+        return to_format.split()

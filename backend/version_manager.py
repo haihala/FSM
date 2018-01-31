@@ -8,7 +8,7 @@ import tarfile
 
 from requests import get
 
-from version_checker import newest
+from .version_checker import newest
 
 class VersionManager():
     """

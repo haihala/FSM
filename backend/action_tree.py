@@ -5,33 +5,33 @@ An action tree is an object comparable to a graph, where using a pathway runs a 
 
 from .version_manager import VersionManager
 from .run_manager import RunManager
-from .config import FOLDERS
+from .config import FOLDERS, setup
 
 class ActionTree():
     """
     This is the actual Action tree object that cli navigates.
     """
 
-    class Action():
-        """
-        Node, that cannot be entered.
-        """
-        def __init__(self, action=None, name=""):
-            self.action = action
-            self.name = name
-
     def __init__(self):
-        binary_folder, save_folder, runfile_folder, conf_folder = FOLDERS
-        self.version_manager = VersionManager(binary_folder)
+        binary_folder, save_folder, runfile_folder, conf_folder, temp_folder = FOLDERS
+        self.version_manager = VersionManager(binary_folder, temp_folder)
         self.run_manager = RunManager(binary_folder, save_folder, runfile_folder, conf_folder)
 
         self.modes = {
             "Main": {
-                "install": ([], ["version"], self.version_manager.install),
-                "start": (["runfile"], [], self.run_manager.start),
-                "create": (["name", "save"], ["conf", "launch_options", "binary"], self.run_manager.create)
+                "install": (self.version_manager.install, [], ["version"]),
+                "start": (self.run_manager.start, ["runfile"], []),
+                "create": (self.run_manager.create, ["name", "save"], ["conf", "launch_options", "binary"]),
+                "setup": (setup, [], [])
             },
             "Play": {}  # In play mode, everything is passed to the server process.
         }
         self.mode = "Main"
 
+    def call(self, fui):
+        """
+        Picks and chooses which function to call given Formated User Input.
+        """
+        if fui[0] in self.modes[self.mode]:
+            return self.modes[self.mode][fui[0]][0](*fui[1:])
+        return "Not a command. Try 'help'"
