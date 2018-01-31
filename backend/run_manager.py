@@ -1,7 +1,7 @@
 """
 Module for the running different server configurations.
 """
-from .version_manager import newest_installed_binary
+from .version_checker import newest_installed_binary
 
 import subprocess
 from os.path import join, exists
@@ -33,10 +33,15 @@ class RunManager():
         Generates the runfile, which is a type of file used to determine the settins a server has.
         """
         if binary is None:
+            # Binary not specified, use newest
             binary = newest_installed_binary()
 
+        if binary is None:
+            # No binary installed
+            return "No binary installed, cannot create map"
+
         # Create savefile if one doesn't exist
-        if exists(join(self.save_folder, save)):
+        if not exists(join(self.save_folder, save)):
             subprocess_handle = subprocess.Popen([
                 join(self.binary_folder, binary, "bin", "x64", "factorio"),
                 "--create",

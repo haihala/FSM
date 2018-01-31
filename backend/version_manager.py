@@ -37,8 +37,8 @@ class VersionManager():
             return "Version {} already installed".format(version)
 
         self.download(version)
-        self.unpack(version)
-        move(join(self.temp_folder, version), join(self.binary_folder, version))
+        self.unpack()
+        move(join(self.temp_folder, "factorio"), join(self.binary_folder, version))
 
     def download(self, version):
         """
@@ -55,17 +55,11 @@ class VersionManager():
             if chunk:  # filter out keep-alive new chunks
                 handle.write(chunk)
 
-    def unpack(self, version):
+    def unpack(self):
         """
         Extracts given tarball to the binary folder
         """
         tarball = tarfile.open(join(self.temp_folder, "linux64.tar.xf"))
-        tarball.extractall(path=join(self.temp_folder, version))
+        tarball.extractall(path=self.temp_folder)
 
         tarball.close()
-
-def newest_installed_binary():
-    """
-    Returns newest installed binary
-    """
-    pass
