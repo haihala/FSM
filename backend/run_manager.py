@@ -1,6 +1,7 @@
 """
 Module for the running different server configurations.
 """
+from .version_manager import newest_installed_binary
 
 import subprocess
 from os.path import join, exists
@@ -20,19 +21,19 @@ class RunManager():
 
         self.instance = None
 
-    def newest_binary(self):
+    def pass_through(self, msg):
         """
-        returns the newest binary
+        Used to pass stuff to the factorio server. Useful for accessing the server per usual.
         """
-        pass
+        if self.instance:
+            self.instance.communicate(input=msg)
 
     def create(self, name, save, launch_options="", conf=None, binary=None):
         """
         Generates the runfile, which is a type of file used to determine the settins a server has.
         """
         if binary is None:
-            binary = self.newest_binary()
-
+            binary = newest_installed_binary()
 
         # Create savefile if one doesn't exist
         if exists(join(self.save_folder, save)):

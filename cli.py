@@ -14,7 +14,7 @@ def main():
     Main function of the cli. Handles user input and text output.
     """
     sarg = argv[1:]
-    uic = Cli(sargs)  # User Interface Child, meaning something inheriting from UI()
+    uic = Cli(sarg)  # User Interface Child, meaning something inheriting from UI()
 
     while uic.running:
         uic.tick()

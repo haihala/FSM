@@ -2,6 +2,7 @@
 UI is a parent class to UIs that cli uses.
 """
 from abc import abstractmethod
+from .action_tree import ActionTree
 
 class UI():
     """
@@ -26,7 +27,7 @@ class Cli(UI):
     def __init__(self, *args):
         super().__init__(self)
         self.output = ""
-        self.action_tree =
+        self.action_tree = ActionTree()
 
     def tick(self):
         print(self.output)

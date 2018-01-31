@@ -99,3 +99,10 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Project Specific
+tmp/
+conf/
+runfiles/
+saves/
+binaries/

@@ -22,34 +22,16 @@ class ActionTree():
 
     def __init__(self):
         binary_folder, save_folder, runfile_folder, conf_folder = FOLDERS
-        self.version_manager = VersionManager()
+        self.version_manager = VersionManager(binary_folder)
         self.run_manager = RunManager(binary_folder, save_folder, runfile_folder, conf_folder)
 
-        self.universal = {
-            "go": (["Target mode"], [], self.move_to)
-        }
         self.modes = {
             "Main": {
                 "install": ([], ["version"], self.version_manager.install),
-                "start": (["save"], ["version"], )
+                "start": (["runfile"], [], self.run_manager.start),
+                "create": (["name", "save"], ["conf", "launch_options", "binary"], self.run_manager.create)
             },
-            "Play": {
-                "stop": (),
-                "*": ()
-            }
+            "Play": {}  # In play mode, everything is passed to the server process.
         }
         self.mode = "Main"
 
-    def get_available_actions(self):
-        """
-        returns a dictionary of strings and functions.
-        """
-        actions = {}
-        actions.update(self.universal)
-        actions.update(self.modes[self.mode])
-        return actions
-
-    def move_to(self, where):
-        """
-        Changes to mode without executing transfer function.
-        """
